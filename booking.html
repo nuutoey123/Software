@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บริการจองห้องประชุม</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+        }
+
+        html,
+        body {
+            scroll-behavior: smooth;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            padding: 15px 0;
+            transition: top 0.3s ease-in-out;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .logo img {
+            height: 50px;
+            display: block;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #f39c12;
+        }
+
+        .room-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .room-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .room-card img {
+            width: 80%;
+            height: 400px;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .room-card h3 {
+            position: absolute;
+            top: 8px;
+            left: 45px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .room-card .details-btn {
+            position: absolute;
+            bottom: 15px;
+            left: 30%;
+            transform: translateX(-50%);
+            background: white;
+            border: 2px solid #333;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .room-card .details-btn:hover {
+            background: #333;
+            color: white;
+        }
+
+        .go-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .go-top.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer {
+            background: white;
+            padding: 60px;
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+        }
+
+        .footer .contact-info {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .footer .contact-info p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .footer .contact-details {
+            text-align: right;
+            font-weight: 600;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let lastScrollTop = 0;
+            const navbar = document.querySelector("header");
+            const goTopButton = document.getElementById("goTop");
+
+            window.addEventListener("scroll", function () {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > 50) {
+                    navbar.style.top = "-80px";
+                    goTopButton.classList.add("show");
+                } else {
+                    navbar.style.top = "0";
+                    goTopButton.classList.remove("show");
+                }
+                lastScrollTop = scrollTop;
+            });
+
+            const fadeInElements = document.querySelectorAll(".fade-in");
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            fadeInElements.forEach(element => observer.observe(element));
+        });
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</head>
+
+<body>
+    <header class="fade-in">
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="logo">
+            </div>
+            <ul>
+                <li><a href="index.html">หน้าหลัก</a></li>
+                <li><a href="booking.html">จองห้อง</a></li>
+                <li><a href="#">วิธีจองห้อง</a></li>
+                <li><a href="#">กฎระเบียบ</a></li>
+                <li><a href="#">การจองของท่าน</a></li>
+            </ul>
+        </nav>
+    </header>
+    <button id="goTop" class="go-top" onclick="scrollToTop()">▲</button>
+    <section class="room-container fade-in">
+        <h2 style="color: #486284; font-size: 50px; margin-bottom: 30px;">ห้องประชุม</h2>
+        <p style="margin-bottom: 60px;">พบกับบริการจองห้องประชุมออนไลน์ที่สะดวกและรวดเร็วที่สุด ไม่ว่าคุณจะอยู่ที่ไหน
+            <br> ก็สามารถเลือกดูและจองห้องประชุมที่ตรงกับความต้องการของคุณได้อย่างง่ายดาย
+        </p>
+        <hr style="margin-bottom: 20px; color: #90A3BF;">
+        <div class="room-grid">
+            <div class="room-card">
+                <img src="room1.jpg" alt="ห้องขนาดเล็ก 105">
+                <h3>ห้องขนาดเล็ก 105</h3>
+                <a href="#" class="details-btn">รายละเอียด</a>
+            </div>
+            <div class="room-card">
+                <img src="room1.jpg" alt="ห้องขนาดเล็ก 106">
+                <h3>ห้องขนาดเล็ก 106</h3>
+                <a href="#" class="details-btn">รายละเอียด</a>
+            </div>
+            <div class="room-card">
+                <img src="room1.jpg" alt="ห้องขนาดเล็ก 107">
+                <h3>ห้องขนาดเล็ก 107</h3>
+                <a href="#" class="details-btn">รายละเอียด</a>
+            </div>
+            <div class="room-card">
+                <img src="room1.jpg" alt="ห้องขนาดเล็ก 108">
+                <h3>ห้องขนาดเล็ก 108</h3>
+                <a href="#" class="details-btn">รายละเอียด</a>
+            </div>
+        </div>
+    </section>
+    <footer class="footer fade-in">
+        <div class="contact-info">
+            <h3>ติดต่อสอบถามเพิ่มเติม</h3>
+            <p><strong>องค์การบริหารส่วนจังหวัดนนทบุรี</strong></p>
+            <p>NONTABURI PROVINCIAL ADMINISTRATIVE ORGANIZATION</p>
+            <p>ถนนรัตนาธิเบศร์ 6 ตำบลบางกระสอ อำเภอเมืองนนทบุรี จังหวัดนนทบุรี 11000</p>
+        </div>
+        <div class="contact-details">
+            <p><strong>โทรศัพท์:</strong> 02-589-0481-5</p>
+            <p><strong>โทรสาร:</strong> 0-2591-6929</p>
+            <p><strong>Email:</strong> admin@nont-pro.go.th</p>
+        </div>
+    </footer>
+</body>
+
+</html>

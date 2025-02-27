@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,18 +15,23 @@
             font-family: 'Inter', sans-serif;
             font-weight: 400;
         }
-        html, body {
+
+        html,
+        body {
             scroll-behavior: smooth;
         }
+
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 1s ease-in-out, transform 1s ease-in-out;
         }
+
         .fade-in.show {
             opacity: 1;
             transform: translateY(0);
         }
+
         header {
             position: fixed;
             width: 100%;
@@ -35,9 +41,11 @@
             transition: background 0.3s;
             z-index: 1000;
         }
+
         header:hover {
             background: rgba(255, 255, 255, 0.3);
         }
+
         nav {
             display: flex;
             justify-content: space-between;
@@ -46,26 +54,32 @@
             margin: auto;
             padding: 0 20px;
         }
+
         .logo img {
             height: 50px;
             display: block;
         }
+
         nav ul {
             list-style: none;
             display: flex;
         }
+
         nav ul li {
             margin-left: 20px;
         }
+
         nav ul li a {
             color: #fff;
             text-decoration: none;
             font-size: 18px;
             transition: color 0.3s;
         }
+
         nav ul li a:hover {
             color: #f39c12;
         }
+
         .hero {
             position: relative;
             background: url('meeting-room.jpg') no-repeat center center/cover;
@@ -78,6 +92,7 @@
             color: white;
             padding-top: 80px;
         }
+
         .overlay {
             position: absolute;
             top: 0;
@@ -86,10 +101,12 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
         }
+
         .content {
             position: relative;
             z-index: 1;
         }
+
         .btn {
             display: inline-block;
             margin-top: 200px;
@@ -103,10 +120,12 @@
             cursor: pointer;
             transition: background 0.3s, color 0.3s;
         }
+
         .btn:hover {
             background: #ddd;
             color: #2c3e50;
         }
+
         .section {
             max-width: 1200px;
             margin: 50px auto;
@@ -114,30 +133,36 @@
             align-items: center;
             text-align: left;
         }
+
         .section .text {
             flex: 1;
         }
+
         .section h2 {
             font-size: 32px;
             color: #333;
         }
+
         .section p {
             font-size: 18px;
             margin: 15px 0;
             color: #555;
         }
+
         .image-gallery {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             flex: 1;
         }
+
         .image-gallery img {
             width: 100%;
             height: auto;
             object-fit: cover;
             border-radius: 8px;
         }
+
         .btn-more {
             display: inline-block;
             margin-top: 20px;
@@ -149,12 +174,15 @@
             text-decoration: none;
             transition: background 0.3s;
         }
+
         .btn-more:hover {
             background: #e67e22;
         }
+
         .textHeader {
-            font-size:70px;
+            font-size: 70px;
         }
+
         .section-title {
             text-align: center;
             font-size: 24px;
@@ -162,6 +190,7 @@
             margin-bottom: 200px;
             color: #333;
         }
+
         .rules-section {
             max-width: 1200px;
             margin: 50px auto;
@@ -172,26 +201,32 @@
             display: flex;
             align-items: center;
         }
+
         .rules-text {
             flex: 1;
         }
+
         .rules-text h2 {
             font-size: 24px;
             margin-bottom: 15px;
         }
+
         .rules-text ul {
             list-style: decimal inside;
             font-size: 16px;
             line-height: 1.8;
         }
+
         .rules-image {
             flex: 1;
             padding-left: 20px;
         }
+
         .rules-image img {
             width: 100%;
             border-radius: 8px;
         }
+
         .footer {
             background: white;
             padding: 60px;
@@ -204,22 +239,58 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             font-size: 18px;
         }
+
         .footer .contact-info {
             text-align: left;
             font-weight: 600;
         }
+
         .footer .contact-info p {
             margin: 10px 0;
             font-size: 18px;
         }
+
         .footer .contact-details {
             text-align: right;
             font-weight: 600;
         }
+
+        .go-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .go-top.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            window.scrollTo(0, 0); // รีเซ็ตตำแหน่งการเลื่อนให้อยู่ด้านบนเมื่อโหลดหน้าใหม่
+        document.addEventListener("DOMContentLoaded", function () {
+            let lastScrollTop = 0;
+            const navbar = document.querySelector("header");
+            window.addEventListener("scroll", function () {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > 50) {
+                    navbar.style.top = "-80px";
+                } else {
+                    navbar.style.top = "0";
+                }
+                lastScrollTop = scrollTop;
+            });
+
             const fadeInElements = document.querySelectorAll(".fade-in");
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
@@ -232,7 +303,30 @@
             fadeInElements.forEach(element => observer.observe(element));
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let lastScrollTop = 0;
+            const navbar = document.querySelector("header");
+            const goTopButton = document.getElementById("goTop");
+
+            window.addEventListener("scroll", function () {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > 50) {
+                    navbar.style.top = "-80px";
+                    goTopButton.classList.add("show");
+                } else {
+                    navbar.style.top = "0";
+                    goTopButton.classList.remove("show");
+                }
+                lastScrollTop = scrollTop;
+            });
+        });
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </head>
+
 <body>
     <header class="fade-in">
         <nav>
@@ -240,14 +334,15 @@
                 <img src="logo.png" alt="logo">
             </div>
             <ul>
-                <li><a href="#">หน้าหลัก</a></li>
-                <li><a href="#">จองห้อง</a></li>
+                <li><a href="index.html">หน้าหลัก</a></li>
+                <li><a href="booking.html">จองห้อง</a></li>
                 <li><a href="#">วิธีจองห้อง</a></li>
                 <li><a href="#">กฎระเบียบ</a></li>
                 <li><a href="#">การจองของท่าน</a></li>
             </ul>
         </nav>
     </header>
+    <button id="goTop" class="go-top" onclick="scrollToTop()">▲</button>
     <section class="hero fade-in">
         <div class="overlay"></div>
         <div class="content">
@@ -256,11 +351,13 @@
             <button class="btn">จองห้อง</button>
         </div>
     </section>
-    <h2 class="section-title fade-in">"ให้การประชุมของคุณเป็นเรื่องง่าย ด้วยบริการจองห้องประชุมออนไลน์ที่สะดวกและรวดเร็ว"</h2>
+    <h2 class="section-title fade-in">"ให้การประชุมของคุณเป็นเรื่องง่าย
+        ด้วยบริการจองห้องประชุมออนไลน์ที่สะดวกและรวดเร็ว"</h2>
     <section class="section fade-in">
         <div class="text">
             <h2>รูปแบบ <span style="color: #3f51b5;">ห้องประชุม</span></h2>
-            <p>"การประชุมที่ดีไม่ได้อยู่ที่เนื้อหาเพียงอย่างเดียว แต่บรรยากาศของห้องประชุมก็มีส่วนสำคัญ บางทีห้องประชุมแบบไหนก็จะช่วยให้การประชุมของคุณราบรื่นและมีประสิทธิภาพมากยิ่งขึ้น"</p>
+            <p>"การประชุมที่ดีไม่ได้อยู่ที่เนื้อหาเพียงอย่างเดียว แต่บรรยากาศของห้องประชุมก็มีส่วนสำคัญ
+                บางทีห้องประชุมแบบไหนก็จะช่วยให้การประชุมของคุณราบรื่นและมีประสิทธิภาพมากยิ่งขึ้น"</p>
             <a href="#" class="btn-more">ดูเพิ่มเติม</a>
         </div>
         <div class="image-gallery">
@@ -279,8 +376,12 @@
                 <li>อนุญาตให้ใช้ห้องประชุมเพื่อการประชุม สัมมนา หรือกิจกรรมที่เกี่ยวข้องเท่านั้น</li>
                 <li>ห้ามนำอาหารและเครื่องดื่มเข้าไปในห้องประชุม</li>
                 <li>ห้ามสูบบุหรี่ในห้องประชุม</li>
-                <li>กรุณาดูแลรักษาความสะอาดของห้องประชุม</li>
-                <li>โปรดใช้เครื่องมือและอุปกรณ์ด้วยความระมัดระวัง</li>
+                <li>กรุณาดูแลรักษาความสะอาดและความเป็นระเบียบเรียบร้อยของห้องประชุม</li>
+                <li>กรุณาใช้อุปกรณ์และสิ่งอำนวยความสะดวกต่างๆ อย่างระมัดระวัง</li>
+                <li>หากอุปกรณ์หรือสิ่งอำนวยความสะดวกใดๆ เสียหาย กรุณาแจ้งเจ้าหน้าที่</li>
+                <li>ผู้ใช้ห้องประชุมต้องรับผิดชอบต่อความเสียหายที่เกิดขึ้นกับห้องประชุม อุปกรณ์
+                    และสิ่งอำนวยความสะดวกต่างๆ</li>
+                <li>กรุณาออกจากห้องประชุมตรงเวลา และจัดเก็บอุปกรณ์และสิ่งของต่างๆ ให้เรียบร้อย</li>
             </ul>
         </div>
         <div class="rules-image">
@@ -301,4 +402,5 @@
         </div>
     </footer>
 </body>
+
 </html>
