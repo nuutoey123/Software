@@ -1,3 +1,5 @@
+<?php include 'config/config.php'; ?>
+
 <!DOCTYPE html>
 <html lang="th">
 
@@ -5,278 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>บริการจองห้องประชุม</title>
-    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-        }
-
-        html,
-        body {
-            scroll-behavior: smooth;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-        }
-
-        .fade-in.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            padding: 15px 0;
-            transition: background 0.3s;
-            z-index: 1000;
-        }
-
-        header:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: auto;
-            padding: 0 20px;
-        }
-
-        .logo img {
-            height: 50px;
-            display: block;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-        }
-
-        nav ul li {
-            margin-left: 20px;
-        }
-
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #f39c12;
-        }
-
-        .hero {
-            position: relative;
-            background: url('meeting-room.jpg') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding-top: 80px;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        .content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 200px;
-            padding: 12px 24px;
-            background: white;
-            color: #2c3e50;
-            font-size: 18px;
-            border-radius: 25px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        .btn:hover {
-            background: #ddd;
-            color: #2c3e50;
-        }
-
-        .section {
-            max-width: 1200px;
-            margin: 50px auto;
-            display: flex;
-            align-items: center;
-            text-align: left;
-        }
-
-        .section .text {
-            flex: 1;
-        }
-
-        .section h2 {
-            font-size: 32px;
-            color: #333;
-        }
-
-        .section p {
-            font-size: 18px;
-            margin: 15px 0;
-            color: #555;
-        }
-
-        .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            flex: 1;
-        }
-
-        .image-gallery img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .btn-more {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #f39c12;
-            color: white;
-            font-size: 18px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-        .btn-more:hover {
-            background: #e67e22;
-        }
-
-        .textHeader {
-            font-size: 70px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 24px;
-            margin-top: 200px;
-            margin-bottom: 200px;
-            color: #333;
-        }
-
-        .rules-section {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 30px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-        }
-
-        .rules-text {
-            flex: 1;
-        }
-
-        .rules-text h2 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .rules-text ul {
-            list-style: decimal inside;
-            font-size: 16px;
-            line-height: 1.8;
-        }
-
-        .rules-image {
-            flex: 1;
-            padding-left: 20px;
-        }
-
-        .rules-image img {
-            width: 100%;
-            border-radius: 8px;
-        }
-
-        .footer {
-            background: white;
-            padding: 60px;
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: auto;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            font-size: 18px;
-        }
-
-        .footer .contact-info {
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .footer .contact-info p {
-            margin: 10px 0;
-            font-size: 18px;
-        }
-
-        .footer .contact-details {
-            text-align: right;
-            font-weight: 600;
-        }
-
-        .go-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: none;
-            background: #f39c12;
-            color: white;
-            border: none;
-            padding: 12px 16px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: opacity 0.3s, transform 0.3s;
-        }
-
-        .go-top.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <link rel="stylesheet" href="/software/css/style-index.css"/>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let lastScrollTop = 0;
@@ -302,8 +34,7 @@
             }, { threshold: 0.15 });
             fadeInElements.forEach(element => observer.observe(element));
         });
-    </script>
-    <script>
+
         document.addEventListener("DOMContentLoaded", function () {
             let lastScrollTop = 0;
             const navbar = document.querySelector("header");
@@ -321,6 +52,7 @@
                 lastScrollTop = scrollTop;
             });
         });
+
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -331,11 +63,11 @@
     <header class="fade-in">
         <nav>
             <div class="logo">
-                <img src="logo.png" alt="logo">
+                <img src="/software/images/logo.png" alt="logo">
             </div>
             <ul>
-                <li><a href="index.html">หน้าหลัก</a></li>
-                <li><a href="booking.html">จองห้อง</a></li>
+                <li><a href="index.php">หน้าหลัก</a></li>
+                <li><a href="booking.php">จองห้อง</a></li>
                 <li><a href="#">วิธีจองห้อง</a></li>
                 <li><a href="#">กฎระเบียบ</a></li>
                 <li><a href="#">การจองของท่าน</a></li>
@@ -361,10 +93,10 @@
             <a href="#" class="btn-more">ดูเพิ่มเติม</a>
         </div>
         <div class="image-gallery">
-            <img src="meeting1.jpg" alt="Meeting Room 1" class="fade-in">
-            <img src="meeting2.jpg" alt="Meeting Room 2" class="fade-in">
-            <img src="meeting3.jpg" alt="Meeting Room 3" class="fade-in">
-            <img src="meeting4.jpg" alt="Meeting Room 4" class="fade-in">
+            <img src="/software/images/meeting1.jpg" alt="Meeting Room 1" class="fade-in">
+            <img src="/software/images/meeting2.jpg" alt="Meeting Room 2" class="fade-in">
+            <img src="/software/images/meeting3.jpg" alt="Meeting Room 3" class="fade-in">
+            <img src="/software/images/meeting4.jpg" alt="Meeting Room 4" class="fade-in">
         </div>
     </section>
     <section class="rules-section fade-in">
@@ -385,7 +117,7 @@
             </ul>
         </div>
         <div class="rules-image">
-            <img src="rules-image.jpg" alt="กฎระเบียบการใช้ห้องประชุม">
+            <img src="images/rules-image.jpg" alt="กฎระเบียบการใช้ห้องประชุม">
         </div>
     </section>
     <footer class="footer fade-in">
