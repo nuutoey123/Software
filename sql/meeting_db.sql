@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2025 at 06:39 PM
+-- Generation Time: Mar 05, 2025 at 04:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,11 @@ CREATE TABLE `bookings` (
 
 INSERT INTO `bookings` (`id`, `room_id`, `customer_name`, `customer_phone`, `customer_department`, `booking_date`, `time_slot`) VALUES
 (2, 2, 'ฟิวส์', '0936380002', 'นักศึกษา', '2025-03-04', '17:00 - 18:00'),
-(4, 1, 'ฟิวส์เอ๊กซ์', '0936380002', 'นศ', '2025-03-06', '08:00 - 09:00');
+(4, 1, 'ฟิวส์เอ๊กซ์', '0936380002', 'นศ', '2025-03-06', '08:00 - 09:00'),
+(5, 2, 'test123', '12345678', 'test', '2025-03-05', '08:00 - 09:00'),
+(6, 1, 'dwadaw', 'dawdaw', 'dwawda', '2025-03-05', '08:00 - 09:00'),
+(9, 1, 'qwdqwdqwd', 'qwdqwdqwd', 'qwdqwdqw', '2025-03-13', '08:00 - 09:00'),
+(10, 2, 'panuwat', '0936380002', 'นศ', '2025-03-06', '08:00 - 09:00');
 
 -- --------------------------------------------------------
 
@@ -124,7 +128,7 @@ ALTER TABLE `time_slots`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `rooms`
