@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root"; // เปลี่ยนเป็นชื่อผู้ใช้จริง
-$password = ""; // ใส่รหัสผ่านของ MySQL
+$password = "12345678"; // ใส่รหัสผ่านของ MySQL
 $dbname = "meeting_db";
 
 // สร้างการเชื่อมต่อ

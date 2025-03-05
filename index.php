@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>บริการจองห้องประชุม</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/software/css/style-index.css"/>
+    <link rel="stylesheet" href="/software/css/style-index.css" />
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let lastScrollTop = 0;
@@ -68,9 +68,10 @@
             <ul>
                 <li><a href="index.php">หน้าหลัก</a></li>
                 <li><a href="booking.php">จองห้อง</a></li>
-                <li><a href="#">วิธีจองห้อง</a></li>
-                <li><a href="#">กฎระเบียบ</a></li>
-                <li><a href="#">การจองของท่าน</a></li>
+                <li><a href="howto.php">วิธีจองห้อง</a></li>
+                <li><a href="rules.php">กฎระเบียบ</a></li>
+                <li><a href="my_bookings.php">การจองของท่าน</a></li>
+                <li><a href="booking_calendar.php">ปฏิทิน</a></li>
             </ul>
         </nav>
     </header>
@@ -80,7 +81,7 @@
         <div class="content">
             <h2>"ค้นหาและจองห้องประชุมที่ใช่ ได้อย่างรวดเร็ว"</h2>
             <h1 class="textHeader">บริการจองห้องประชุม</h1>
-            <button class="btn">จองห้อง</button>
+            <a href="booking.php" class="btn">จองห้อง</a>
         </div>
     </section>
     <h2 class="section-title fade-in">"ให้การประชุมของคุณเป็นเรื่องง่าย

@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,9 +26,10 @@
             <ul>
                 <li><a href="index.php">หน้าหลัก</a></li>
                 <li><a href="booking.php">จองห้อง</a></li>
-                <li><a href="#">วิธีจองห้อง</a></li>
-                <li><a href="#">กฎระเบียบ</a></li>
-                <li><a href="#">การจองของท่าน</a></li>
+                <li><a href="howto.php">วิธีจองห้อง</a></li>
+                <li><a href="rules.php">กฎระเบียบ</a></li>
+                <li><a href="my_bookings.php">การจองของท่าน</a></li>
+                <li><a href="booking_calendar.php">ปฏิทิน</a></li>
             </ul>
         </nav>
     </header>
@@ -115,7 +117,7 @@
                         <input type="hidden" name="room_id" value="<?php echo $room_id; ?>">
                         <input type="hidden" name="selected_date" id="selected_date">
                         <input type="hidden" name="selected_time" id="selected_time">
-                        
+
                         <div class="mb-3">
                             <label>ชื่อผู้จอง</label>
                             <input type="text" name="customer_name" class="form-control" required>
@@ -140,22 +142,23 @@
     </footer>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        flatpickr("#calendar", {
-            inline: true,
-            dateFormat: "Y-m-d",
-            minDate: "today",
-            locale: "th"
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+            flatpickr("#calendar", {
+                inline: true,
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                locale: "th"
+            });
 
-        document.querySelector(".book-room").addEventListener("click", function () {
-            document.getElementById("selected_date").value = document.getElementById("calendar").value;
-            document.getElementById("selected_time").value = document.getElementById("time_slot").value;
+            document.querySelector(".book-room").addEventListener("click", function () {
+                document.getElementById("selected_date").value = document.getElementById("calendar").value;
+                document.getElementById("selected_time").value = document.getElementById("time_slot").value;
+            });
         });
-    });
     </script>
-    
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

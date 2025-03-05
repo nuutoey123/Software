@@ -9,14 +9,6 @@
     <title>บริการจองห้องประชุม</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/software/css/style-rules.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/main.min.css">
-    <!-- FullCalendar CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
-    <!-- FullCalendar JS -->
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let lastScrollTop = 0;
@@ -88,73 +80,27 @@
         <div class="overlay"></div>
     </section>
 
-    <br>
-    <br>
-    <br>
-    <div class="container mt-4">
-        <h2 class="text-primary">📅 ปฏิทินการจองห้องประชุม</h2>
-        <div class="row">
-            <!-- ปฏิทิน -->
-            <div class="col-md-12">
-                <div class="card shadow p-3">
-                    <div id="calendar"></div>
-                </div>
-            </div>
+    <section class="rules-section fade-in">
+        <div class="rules-text">
+            <h2>กฎระเบียบการใช้ห้องประชุม</h2>
+            <ul>
+                <li>กรุณาจองห้องประชุมล่วงหน้าผ่านระบบออนไลน์ หรือ ติดต่อเจ้าหน้าที่</li>
+                <li>กรุณาตรงต่อเวลา หากมาสายเกิน 15 นาที ถือว่าสละสิทธิ์การจอง</li>
+                <li>อนุญาตให้ใช้ห้องประชุมเพื่อการประชุม สัมมนา หรือกิจกรรมที่เกี่ยวข้องเท่านั้น</li>
+                <li>ห้ามนำอาหารและเครื่องดื่มเข้าไปในห้องประชุม</li>
+                <li>ห้ามสูบบุหรี่ในห้องประชุม</li>
+                <li>กรุณาดูแลรักษาความสะอาดและความเป็นระเบียบเรียบร้อยของห้องประชุม</li>
+                <li>กรุณาใช้อุปกรณ์และสิ่งอำนวยความสะดวกต่างๆ อย่างระมัดระวัง</li>
+                <li>หากอุปกรณ์หรือสิ่งอำนวยความสะดวกใดๆ เสียหาย กรุณาแจ้งเจ้าหน้าที่</li>
+                <li>ผู้ใช้ห้องประชุมต้องรับผิดชอบต่อความเสียหายที่เกิดขึ้นกับห้องประชุม อุปกรณ์
+                    และสิ่งอำนวยความสะดวกต่างๆ</li>
+                <li>กรุณาออกจากห้องประชุมตรงเวลา และจัดเก็บอุปกรณ์และสิ่งของต่างๆ ให้เรียบร้อย</li>
+            </ul>
         </div>
-    </div>
-
-    <!-- Modal แสดงรายละเอียดการจอง -->
-    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bookingModalLabel">รายละเอียดการจอง</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>ห้องประชุม:</strong> <span id="roomName"></span></p>
-                    <p><strong>วันที่:</strong> <span id="bookingDate"></span></p>
-                    <p><strong>ช่วงเวลา:</strong> <span id="bookingTime"></span></p>
-                    <p><strong>ผู้จอง:</strong> <span id="customerName"></span></p>
-                    <p><strong>เบอร์โทร:</strong> <span id="customerPhone"></span></p>
-                    <p><strong>หน่วยงาน:</strong> <span id="department"></span></p>
-                </div>
-            </div>
+        <div class="rules-image">
+            <img src="images/rules-image.jpg" alt="กฎระเบียบการใช้ห้องประชุม">
         </div>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var calendarEl = document.getElementById("calendar");
-
-            if (calendarEl) {
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: "dayGridMonth",
-                    events: "fetch_bookings.php",
-                    eventClick: function (info) {
-                        console.log(info.event.extendedProps); // ตรวจสอบค่าที่ถูกส่งมา
-
-                        $("#roomName").text(info.event.extendedProps.roomName || "ไม่มีข้อมูล");
-                        $("#bookingDate").text(info.event.start.toISOString().split('T')[0] || "ไม่มีข้อมูล");
-                        $("#bookingTime").text(info.event.extendedProps.bookingTime || "ไม่มีข้อมูล");
-                        $("#customerName").text(info.event.extendedProps.customerName || "ไม่มีข้อมูล");
-                        $("#customerPhone").text(info.event.extendedProps.customerPhone || "ไม่มีข้อมูล");
-                        $("#department").text(info.event.extendedProps.department || "ไม่มีข้อมูล");
-
-                        $("#bookingModal").modal("show");
-                    }
-                });
-                calendar.render();
-            } else {
-                console.error("❌ ไม่พบ element #calendar ในหน้าเว็บ!");
-            }
-        });
-
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
+    </section>
     <footer class="footer fade-in">
         <div class="contact-info">
             <h3>ติดต่อสอบถามเพิ่มเติม</h3>

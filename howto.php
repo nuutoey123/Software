@@ -7,22 +7,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>บริการจองห้องประชุม</title>
-    <link rel="stylesheet" href="/software/css/style-booking.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/software/css/style-rules.css" />
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let lastScrollTop = 0;
             const navbar = document.querySelector("header");
-            const goTopButton = document.getElementById("goTop");
-
             window.addEventListener("scroll", function () {
                 let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 if (scrollTop > 50) {
                     navbar.style.top = "-80px";
-                    goTopButton.classList.add("show");
                 } else {
                     navbar.style.top = "0";
-                    goTopButton.classList.remove("show");
                 }
                 lastScrollTop = scrollTop;
             });
@@ -39,11 +35,28 @@
             fadeInElements.forEach(element => observer.observe(element));
         });
 
+        document.addEventListener("DOMContentLoaded", function () {
+            let lastScrollTop = 0;
+            const navbar = document.querySelector("header");
+            const goTopButton = document.getElementById("goTop");
+
+            window.addEventListener("scroll", function () {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > 50) {
+                    navbar.style.top = "-80px";
+                    goTopButton.classList.add("show");
+                } else {
+                    navbar.style.top = "0";
+                    goTopButton.classList.remove("show");
+                }
+                lastScrollTop = scrollTop;
+            });
+        });
+
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
-
 </head>
 
 <body>
@@ -63,33 +76,26 @@
         </nav>
     </header>
     <button id="goTop" class="go-top" onclick="scrollToTop()">▲</button>
-
-    <section class="room-container fade-in">
-        <h2 style="color: #486284; font-size: 50px; margin-bottom: 30px;">ห้องประชุม</h2>
-        <p style="margin-bottom: 60px;">พบกับบริการจองห้องประชุมออนไลน์ที่สะดวกและรวดเร็วที่สุด ไม่ว่าคุณจะอยู่ที่ไหน
-            <br> ก็สามารถเลือกดูและจองห้องประชุมที่ตรงกับความต้องการของคุณได้อย่างง่ายดาย
-        </p>
-        <hr style="margin-bottom: 20px; color: #90A3BF;">
-        <div class="room-grid">
-            <?php
-            $sql = "SELECT * FROM rooms";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '<div class="room-card">';
-                    echo '<img src="/software/images/' . $row["image"] . '" alt="' . $row["name"] . '">';
-                    echo '<h3>' . $row["name"] . '</h3>';
-                    echo '<a href="room_detail.php?id=' . $row["id"] . '" class="details-btn">รายละเอียด</a>';
-                    echo '</div>';
-                }
-            } else {
-                echo "ไม่มีห้องประชุมที่พร้อมใช้งาน";
-            }
-            ?>
-        </div>
+    <section class="hero fade-in">
+        <div class="overlay"></div>
     </section>
 
+    <section class="rules-section fade-in">
+        <div class="rules-text">
+            <h2>วิธีการจองห้อง</h2>
+            <ul>
+                <li>กรุณาเลือกห้องประชุมที่ท่านต้องการ</li>
+                <li>เลือกวัน เวลา</li>
+                <li>กด จองห้อง</li>
+            </ul>
+            </br>
+            </br>
+            <h2>วิธีการยกเลิกห้อง</h2>
+            <ul>
+                <li>ติดต่อเจ้าหน้าที่</li>
+            </ul>
+        </div>
+    </section>
     <footer class="footer fade-in">
         <div class="contact-info">
             <h3>ติดต่อสอบถามเพิ่มเติม</h3>
