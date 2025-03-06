@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 05, 2025 at 04:31 AM
+-- Generation Time: Mar 06, 2025 at 03:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,7 +47,12 @@ INSERT INTO `bookings` (`id`, `room_id`, `customer_name`, `customer_phone`, `cus
 (5, 2, 'test123', '12345678', 'test', '2025-03-05', '08:00 - 09:00'),
 (6, 1, 'dwadaw', 'dawdaw', 'dwawda', '2025-03-05', '08:00 - 09:00'),
 (9, 1, 'qwdqwdqwd', 'qwdqwdqwd', 'qwdqwdqw', '2025-03-13', '08:00 - 09:00'),
-(10, 2, 'panuwat', '0936380002', 'นศ', '2025-03-06', '08:00 - 09:00');
+(10, 2, 'panuwat', '0936380002', 'นศ', '2025-03-06', '08:00 - 09:00'),
+(11, 1, 'dxkfewz', '0936380002', 'นศ', '2025-03-07', '08:00 - 09:00'),
+(12, 1, 'dxkfewzx', '0936380002', 'นศ', '2025-03-07', '09:00 - 10:00'),
+(13, 1, 'dxkfewz', '0936380002', 'นศ', '0000-00-00', ''),
+(14, 1, 'dxkfewz', '0936380002', 'นศ', '2025-03-12', '08:00 - 09:00'),
+(15, 1, 'dxkfewz', '0936380002', 'นศ', '2025-03-14', '');
 
 -- --------------------------------------------------------
 
@@ -97,6 +102,27 @@ INSERT INTO `time_slots` (`id`, `time_range`) VALUES
 (8, '16:00 - 17:00'),
 (9, '17:00 - 18:00');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('admin') DEFAULT 'admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `role`, `created_at`) VALUES
+(1, 'admin', '0192023a7bbd73250516f069df18b500', 'admin', '2025-03-06 14:31:08');
+
 --
 -- Indexes for dumped tables
 --
@@ -121,6 +147,13 @@ ALTER TABLE `time_slots`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -128,7 +161,7 @@ ALTER TABLE `time_slots`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `rooms`
@@ -141,6 +174,12 @@ ALTER TABLE `rooms`
 --
 ALTER TABLE `time_slots`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
