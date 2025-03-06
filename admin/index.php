@@ -1,5 +1,5 @@
 <?php 
-include 'config/config.php'; // ไฟล์เชื่อมต่อฐานข้อมูล
+include __DIR__ . '/../config/config.php';  
 
 // ดึงข้อมูลการจองทั้งหมด
 $sql = "SELECT b.id, b.booking_date, b.time_slot, b.customer_name, b.customer_phone, r.name AS room_name 
@@ -55,10 +55,8 @@ $result = $conn->query($sql);
 <body>
     <div class="container">
         <h2>📌 ระบบจัดการการจอง</h2>
-        
         <!-- ปุ่มกลับไปหน้าแรก -->
-        <a href="index.php" class="btn btn-back btn-sm">⬅ กลับไปหน้าแรก</a>
-
+        <a href="index.php" class="btn btn-back btn-sm">⬅ กลับไปหน้าแรก</a> 
         <table class="table table-striped mt-3">
             <thead>
                 <tr>
@@ -88,6 +86,7 @@ $result = $conn->query($sql);
                 <?php } ?>
             </tbody>
         </table>
+        <a href="admin_logout.php" class="btn btn-danger">ออกจากระบบ</a>
     </div>
 </body>
 </html>

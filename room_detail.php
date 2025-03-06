@@ -70,7 +70,8 @@ $stmt->close();
                         </select>
                     </div>
 
-                    <button class="btn book-room" data-bs-toggle="modal" data-bs-target="#bookingModal">จองห้อง</button>
+                    <!-- ปุ่มจองห้อง -->
+                    <button id="openBookingModal" class="btn book-room">จองห้อง</button>
                 </div>
 
                 <div class="right">
@@ -88,6 +89,7 @@ $stmt->close();
         </div>
     </section>
 
+    <!-- Modal ฟอร์มจองห้อง -->
     <div class="modal fade" id="bookingModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -96,7 +98,7 @@ $stmt->close();
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="booking_process.php" method="POST">
+                    <form id="bookingForm" action="booking_process.php" method="POST">
                         <input type="hidden" name="room_id" value="<?php echo $room_id; ?>">
                         <input type="hidden" name="selected_date" id="selected_date">
                         <input type="hidden" name="selected_time" id="selected_time">
@@ -156,8 +158,17 @@ $stmt->close();
                     });
             }
 
-            document.querySelector(".book-room").addEventListener("click", function () {
-                document.getElementById("selected_time").value = document.getElementById("time_slot").value;
+            document.getElementById("openBookingModal").addEventListener("click", function (event) {
+                const selectedDate = document.getElementById("selected_date").value;
+                const selectedTime = document.getElementById("time_slot").value;
+                
+                if (!selectedDate || !selectedTime) {
+                    alert("กรุณาเลือกวันที่และช่วงเวลาก่อนทำการจอง!");
+                    event.preventDefault();
+                } else {
+                    document.getElementById("selected_time").value = selectedTime;
+                    new bootstrap.Modal(document.getElementById("bookingModal")).show();
+                }
             });
         });
     </script>
