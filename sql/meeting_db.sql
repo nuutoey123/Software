@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2025 at 03:46 PM
+-- Generation Time: Mar 07, 2025 at 09:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,9 +50,8 @@ INSERT INTO `bookings` (`id`, `room_id`, `customer_name`, `customer_phone`, `cus
 (10, 2, 'panuwat', '0936380002', 'นศ', '2025-03-06', '08:00 - 09:00'),
 (11, 1, 'dxkfewz', '0936380002', 'นศ', '2025-03-07', '08:00 - 09:00'),
 (12, 1, 'dxkfewzx', '0936380002', 'นศ', '2025-03-07', '09:00 - 10:00'),
-(13, 1, 'dxkfewz', '0936380002', 'นศ', '0000-00-00', ''),
 (14, 1, 'dxkfewz', '0936380002', 'นศ', '2025-03-12', '08:00 - 09:00'),
-(15, 1, 'dxkfewz', '0936380002', 'นศ', '2025-03-14', '');
+(16, 1, 'ภานุวัฒน์', '0936380002', 'นศ', '2025-03-06', '09:00 - 10:00');
 
 -- --------------------------------------------------------
 
@@ -161,7 +160,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `rooms`
