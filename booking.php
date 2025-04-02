@@ -78,7 +78,8 @@
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo '<div class="room-card">';
-                    echo '<img src="/software/images/' . $row["image"] . '" alt="' . $row["name"] . '">';
+                    $firstImage = explode(',', $row["image"])[0]; // ดึงรูปแรกจาก image
+                    echo '<img src="/software/images/' . trim($firstImage) . '" alt="' . $row["name"] . '">';
                     echo '<h3>' . $row["name"] . '</h3>';
                     echo '<a href="room_detail.php?id=' . $row["id"] . '" class="details-btn">รายละเอียด</a>';
                     echo '</div>';

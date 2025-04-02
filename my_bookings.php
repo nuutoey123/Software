@@ -2,11 +2,15 @@
 include 'config/config.php';
 
 // ดึงข้อมูลการจอง **ตั้งแต่วันนี้เป็นต้นไป**
-$sql = "SELECT b.id, b.booking_date, b.time_slot, r.name AS room_name, r.image, 
-               b.customer_name, b.customer_phone, b.customer_department 
-        FROM bookings b 
-        JOIN rooms r ON b.room_id = r.id 
-        WHERE b.booking_date >= CURDATE() 
+$sql = "SELECT 
+            b.id, b.booking_date, b.time_slot, b.customer_name, b.customer_phone,
+            r.name AS room_name, r.image,
+            sd.name AS sub_department_name, d.name AS department_name
+        FROM bookings b
+        JOIN rooms r ON b.room_id = r.id
+        LEFT JOIN sub_departments sd ON b.sub_department_id = sd.id
+        LEFT JOIN departments d ON sd.department_id = d.id
+        WHERE b.booking_date >= CURDATE()
         ORDER BY b.booking_date ASC";
 $result = $conn->query($sql);
 ?>
@@ -51,14 +55,17 @@ $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) { ?>
                     <div class="booking-card">
-                        <img src="/software/images/<?php echo $row['image']; ?>" alt="<?php echo $row['room_name']; ?>">
+                    <?php
+                        $firstImage = explode(',', $row['image'])[0]; // ดึงรูปแรก
+                        ?>
+                        <img src="/software/images/<?php echo trim($firstImage); ?>" alt="<?php echo $row['room_name']; ?>">
                         <div class="card-info">
                             <h3><?php echo $row['room_name']; ?></h3>
                             <p><strong>วันที่:</strong> <?php echo $row['booking_date']; ?></p>
                             <p><strong>ช่วงเวลา:</strong> <?php echo $row['time_slot']; ?></p>
                             <p><strong>ผู้จอง:</strong> <?php echo $row['customer_name']; ?></p>
                             <p><strong>เบอร์โทร:</strong> <?php echo $row['customer_phone']; ?></p>
-                            <p><strong>หน่วยงาน:</strong> <?php echo $row['customer_department']; ?></p>
+                            <p><strong>หน่วยงาน:</strong> <?php echo $row['department_name'] . ' - ' . $row['sub_department_name']; ?></p>
                         </div>
                     </div>
                 <?php }

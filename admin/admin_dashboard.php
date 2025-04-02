@@ -157,7 +157,7 @@ while ($row = $time_slots_result->fetch_assoc()) {
             $("#editForm").submit(function(e){
                 e.preventDefault();
                 $.ajax({
-                    url: "software/update_booking.php", // ✅ แก้พาธให้ถูกต้อง
+                    url: "update_booking.php", // ✅ แก้พาธให้ถูกต้อง
                     type: "POST",
                     data: $("#editForm").serialize(),
                     dataType: "json",
