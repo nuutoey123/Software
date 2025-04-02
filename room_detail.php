@@ -25,6 +25,7 @@ $stmt->close();
 
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,28 +76,32 @@ $stmt->close();
                 </div>
 
                 <div class="right">
-                <div id="roomCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <?php
-                    // แปลงชื่อรูปจากฐานข้อมูลเป็น array (กรณีมีหลายรูปเก็บใน 1 ช่องด้วย comma)
-                    $images = explode(',', $room["image"]);
-                    foreach ($images as $index => $img) {
-                    ?>
-                        <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                            <figure style="max-height: 500px; overflow: hidden;">
-                                <img src="/software/images/<?php echo trim($img); ?>" class="d-block w-100" alt="Room Image <?php echo $index + 1; ?>" style="object-fit: cover; width: 100%; height: 100%;">
-                            </figure>
+                    <div id="roomCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <?php
+                            // แปลงชื่อรูปจากฐานข้อมูลเป็น array (กรณีมีหลายรูปเก็บใน 1 ช่องด้วย comma)
+                            $images = explode(',', $room["image"]);
+                            foreach ($images as $index => $img) {
+                                ?>
+                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                    <figure style="max-height: 500px; overflow: hidden;">
+                                        <img src="/software/images/<?php echo trim($img); ?>" class="d-block w-100"
+                                            alt="Room Image <?php echo $index + 1; ?>"
+                                            style="object-fit: cover; width: 100%; height: 100%;">
+                                    </figure>
+                                </div>
+                            <?php } ?>
                         </div>
-                    <?php } ?>
-                </div>
-                    <!-- ปุ่มเลื่อนซ้าย/ขวา -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#roomCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#roomCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    </button>
-                </div>
+                        <!-- ปุ่มเลื่อนซ้าย/ขวา -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#roomCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#roomCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -131,29 +136,41 @@ $stmt->close();
                             <input type="text" name="customer_phone" class="form-control" required>
                         </div>
                         <div class="mb-3">
+                            <label for="meeting_topic">หัวข้อการประชุม</label>
+                            <input type="text" name="meeting_topic" id="meeting_topic" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="meeting_detail">รายละเอียดการประชุม</label>
+                            <textarea name="meeting_detail" id="meeting_detail" class="form-control" rows="3"
+                                required></textarea>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="sub_department_id">หน่วยงาน</label>
                             <select name="sub_department_id" id="sub_department_id" class="form-select" required>
-                            <option value="">-- เลือกหน่วยงาน --</option>
-                            <?php
-                            $sql = "SELECT sd.id AS sub_id, sd.name AS sub_name, d.id AS dept_id, d.name AS dept_name 
+                                <option value="">-- เลือกหน่วยงาน --</option>
+                                <?php
+                                $sql = "SELECT sd.id AS sub_id, sd.name AS sub_name, d.id AS dept_id, d.name AS dept_name 
                                     FROM sub_departments sd 
                                     JOIN departments d ON sd.department_id = d.id 
                                     ORDER BY d.name, sd.name";
-                            $res = $conn->query($sql);
-                            $current = "";
-                            while ($row = $res->fetch_assoc()) {
-                                if ($current !== $row["dept_name"]) {
-                                    if ($current !== "") echo "</optgroup>";
-                                    $current = $row["dept_name"];
-                                    echo "<optgroup label='" . htmlspecialchars($current) . "'>";
+                                $res = $conn->query($sql);
+                                $current = "";
+                                while ($row = $res->fetch_assoc()) {
+                                    if ($current !== $row["dept_name"]) {
+                                        if ($current !== "")
+                                            echo "</optgroup>";
+                                        $current = $row["dept_name"];
+                                        echo "<optgroup label='" . htmlspecialchars($current) . "'>";
+                                    }
+                                    echo "<option value='" . $row["sub_id"] . "' data-dept-id='" . $row["dept_id"] . "'>" . htmlspecialchars($row["sub_name"]) . "</option>";
                                 }
-                                echo "<option value='" . $row["sub_id"] . "' data-dept-id='" . $row["dept_id"] . "'>" . htmlspecialchars($row["sub_name"]) . "</option>";
-                            }
-                            echo "</optgroup>";
-                            ?>
-                        </select>
+                                echo "</optgroup>";
+                                ?>
+                            </select>
 
-                        <input type="hidden" name="department_id" id="department_id">
+                            <input type="hidden" name="department_id" id="department_id">
                         </div>
                         <button type="submit" class="btn btn-primary">ยืนยันการจอง</button>
                     </form>
@@ -179,7 +196,7 @@ $stmt->close();
                 dateFormat: "Y-m-d",
                 minDate: "today",
                 locale: "th",
-                onChange: function(selectedDates, dateStr) {
+                onChange: function (selectedDates, dateStr) {
                     document.getElementById("selected_date").value = dateStr;
                     fetchBookedTimes(dateStr);
                 }
@@ -191,7 +208,7 @@ $stmt->close();
                     .then(data => {
                         const timeSlotSelect = document.getElementById("time_slot");
                         timeSlotSelect.innerHTML = "<option value=''>-- เลือกช่วงเวลา --</option>";
-                        
+
                         data.time_slots.forEach(slot => {
                             let option = document.createElement("option");
                             option.value = slot;
@@ -207,7 +224,7 @@ $stmt->close();
             document.getElementById("openBookingModal").addEventListener("click", function (event) {
                 const selectedDate = document.getElementById("selected_date").value;
                 const selectedTime = document.getElementById("time_slot").value;
-                
+
                 if (!selectedDate || !selectedTime) {
                     alert("กรุณาเลือกวันที่และช่วงเวลาก่อนทำการจอง!");
                     event.preventDefault();
@@ -221,4 +238,5 @@ $stmt->close();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

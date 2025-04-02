@@ -8,23 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $selected_date = $_POST["selected_date"];
     $selected_time = $_POST["selected_time"];
     $sub_department_id = $_POST["sub_department_id"];
-    $department_id = $_POST["department_id"];
+    $meeting_topic = $_POST["meeting_topic"];
+    $meeting_detail = $_POST["meeting_detail"];
 
-    // เตรียมคำสั่ง SQL ให้ใส่ department_id และ sub_department_id ด้วย
     $stmt = $conn->prepare("INSERT INTO bookings 
-    (room_id, customer_name, customer_phone, booking_date, time_slot, department_id, sub_department_id) 
-    VALUES (?, ?, ?, ?, ?, ?, ?)");
-    
-    $stmt->bind_param("issssii", 
-        $room_id, 
-        $customer_name, 
-        $customer_phone, 
-        $selected_date, 
-        $selected_time, 
-        $department_id, 
-        $sub_department_id
-    );
+        (room_id, customer_name, customer_phone, booking_date, time_slot, sub_department_id, meeting_topic, meeting_detail) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
+    $stmt->bind_param("issssiss", $room_id, $customer_name, $customer_phone, $selected_date, $selected_time, $sub_department_id, $meeting_topic, $meeting_detail);
 
     if ($stmt->execute()) {
         echo "<script>alert('จองห้องสำเร็จ!'); window.location.href='index.php';</script>";
@@ -32,4 +23,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('เกิดข้อผิดพลาด: " . $stmt->error . "');</script>";
     }
 }
+
 ?>

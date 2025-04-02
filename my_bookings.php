@@ -4,6 +4,7 @@ include 'config/config.php';
 // ดึงข้อมูลการจอง **ตั้งแต่วันนี้เป็นต้นไป**
 $sql = "SELECT 
             b.id, b.booking_date, b.time_slot, b.customer_name, b.customer_phone,
+            b.meeting_topic, b.meeting_detail,
             r.name AS room_name, r.image,
             sd.name AS sub_department_name, d.name AS department_name
         FROM bookings b
@@ -55,7 +56,7 @@ $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) { ?>
                     <div class="booking-card">
-                    <?php
+                        <?php
                         $firstImage = explode(',', $row['image'])[0]; // ดึงรูปแรก
                         ?>
                         <img src="/software/images/<?php echo trim($firstImage); ?>" alt="<?php echo $row['room_name']; ?>">
@@ -65,7 +66,10 @@ $result = $conn->query($sql);
                             <p><strong>ช่วงเวลา:</strong> <?php echo $row['time_slot']; ?></p>
                             <p><strong>ผู้จอง:</strong> <?php echo $row['customer_name']; ?></p>
                             <p><strong>เบอร์โทร:</strong> <?php echo $row['customer_phone']; ?></p>
-                            <p><strong>หน่วยงาน:</strong> <?php echo $row['department_name'] . ' - ' . $row['sub_department_name']; ?></p>
+                            <p><strong>หัวข้อการประชุม:</strong> <?php echo $row['meeting_topic']; ?></p>
+                            <p><strong>รายละเอียด:</strong> <?php echo nl2br($row['meeting_detail']); ?></p>
+                            <p><strong>หน่วยงาน:</strong>
+                                <?php echo $row['department_name'] . ' - ' . $row['sub_department_name']; ?></p>
                         </div>
                     </div>
                 <?php }
