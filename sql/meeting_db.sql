@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2025 at 07:34 PM
+-- Generation Time: Apr 02, 2025 at 08:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,17 +35,20 @@ CREATE TABLE `bookings` (
   `booking_date` date NOT NULL,
   `time_slot` varchar(50) NOT NULL,
   `department_id` int(11) DEFAULT NULL,
-  `sub_department_id` int(11) DEFAULT NULL
+  `sub_department_id` int(11) DEFAULT NULL,
+  `meeting_topic` varchar(255) DEFAULT NULL,
+  `meeting_detail` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`id`, `room_id`, `customer_name`, `customer_phone`, `booking_date`, `time_slot`, `department_id`, `sub_department_id`) VALUES
-(33, 1, 'dxkfewz', 'qwdqwdqwd', '2025-04-16', '09:00 - 12:00', 8, 23),
-(34, 1, 'dxkfewz', '0936380002', '2025-04-03', '09:00 - 12:00', 8, 23),
-(35, 1, 'ภานุวัฒน์', '0936380002', '2025-04-03', '13:00 - 16:00', 2, 5);
+INSERT INTO `bookings` (`id`, `room_id`, `customer_name`, `customer_phone`, `booking_date`, `time_slot`, `department_id`, `sub_department_id`, `meeting_topic`, `meeting_detail`) VALUES
+(33, 1, 'dxkfewz', 'qwdqwdqwd', '2025-04-16', '09:00 - 12:00', 8, 23, NULL, NULL),
+(34, 1, 'dxkfewz', '0936380002', '2025-04-03', '09:00 - 12:00', 8, 23, NULL, NULL),
+(35, 1, 'ภานุวัฒน์', '0936380002', '2025-04-03', '13:00 - 16:00', 2, 5, NULL, NULL),
+(36, 1, 'ธนไชย โลกเลื่อง', '0943301218', '2025-04-09', '09:00 - 12:00', NULL, 12, 'การเลือกตั้ง', 'คุยประเด็นเกี่ยวกับการเลือกตั้ง');
 
 -- --------------------------------------------------------
 
@@ -237,7 +240,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `departments`

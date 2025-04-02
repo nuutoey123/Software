@@ -1,5 +1,3 @@
-<?php include 'config/config.php'; ?>
-
 <!DOCTYPE html>
 <html lang="th">
 
@@ -7,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>บริการจองห้องประชุม</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/software/css/style-rules.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/main.min.css">
@@ -43,27 +43,40 @@
             fadeInElements.forEach(element => observer.observe(element));
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
-            let lastScrollTop = 0;
-            const navbar = document.querySelector("header");
-            const goTopButton = document.getElementById("goTop");
-
-            window.addEventListener("scroll", function () {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (scrollTop > 50) {
-                    navbar.style.top = "-80px";
-                    goTopButton.classList.add("show");
-                } else {
-                    navbar.style.top = "0";
-                    goTopButton.classList.remove("show");
-                }
-                lastScrollTop = scrollTop;
-            });
-        });
-
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // ดึงข้อมูลการจองมาแสดงในปฏิทิน
+        document.addEventListener("DOMContentLoaded", function () {
+            var calendarEl = document.getElementById("calendar");
+
+            if (calendarEl) {
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: "dayGridMonth",
+                    events: "fetch_bookings.php",  // ดึงข้อมูลจากไฟล์นี้
+                    eventClick: function (info) {
+                        console.log(info.event.extendedProps); // ตรวจสอบค่าที่ถูกส่งมา
+
+                        // เพิ่มข้อมูลลงใน modal
+                        $("#roomName").text(info.event.extendedProps.roomName || "ไม่มีข้อมูล");
+                        $("#bookingDate").text(info.event.start.toISOString().split('T')[0] || "ไม่มีข้อมูล");
+                        $("#bookingTime").text(info.event.extendedProps.bookingTime || "ไม่มีข้อมูล");
+                        $("#customerName").text(info.event.extendedProps.customerName || "ไม่มีข้อมูล");
+                        $("#customerPhone").text(info.event.extendedProps.customerPhone || "ไม่มีข้อมูล");
+                        $("#department").text(info.event.extendedProps.department || "ไม่มีข้อมูล");
+                        $("#meetingTopic").text(info.event.extendedProps.meetingTopic || "ไม่มีข้อมูล");
+                        $("#meetingDetail").text(info.event.extendedProps.meetingDetail || "ไม่มีข้อมูล");
+
+                        // แสดง modal
+                        $("#bookingModal").modal("show");
+                    }
+                });
+                calendar.render();
+            } else {
+                console.error("❌ ไม่พบ element #calendar ในหน้าเว็บ!");
+            }
+        });
     </script>
 </head>
 
@@ -83,14 +96,13 @@
             </ul>
         </nav>
     </header>
+
     <button id="goTop" class="go-top" onclick="scrollToTop()">▲</button>
+
     <section class="hero fade-in">
         <div class="overlay"></div>
     </section>
 
-    <br>
-    <br>
-    <br>
     <div class="container mt-4">
         <h2 class="text-primary">📅 ปฏิทินการจองห้องประชุม</h2>
         <div class="row">
@@ -118,43 +130,15 @@
                     <p><strong>ผู้จอง:</strong> <span id="customerName"></span></p>
                     <p><strong>เบอร์โทร:</strong> <span id="customerPhone"></span></p>
                     <p><strong>หน่วยงาน:</strong> <span id="department"></span></p>
+                    <p><strong>หัวข้อการประชุม:</strong> <span id="meetingTopic"></span></p>
+                    <p><strong>รายละเอียดการประชุม:</strong> <span id="meetingDetail"></span></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var calendarEl = document.getElementById("calendar");
-
-            if (calendarEl) {
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: "dayGridMonth",
-                    events: "fetch_bookings.php",
-                    eventClick: function (info) {
-                        console.log(info.event.extendedProps); // ตรวจสอบค่าที่ถูกส่งมา
-
-                        $("#roomName").text(info.event.extendedProps.roomName || "ไม่มีข้อมูล");
-                        $("#bookingDate").text(info.event.start.toISOString().split('T')[0] || "ไม่มีข้อมูล");
-                        $("#bookingTime").text(info.event.extendedProps.bookingTime || "ไม่มีข้อมูล");
-                        $("#customerName").text(info.event.extendedProps.customerName || "ไม่มีข้อมูล");
-                        $("#customerPhone").text(info.event.extendedProps.customerPhone || "ไม่มีข้อมูล");
-                        $("#department").text(info.event.extendedProps.department || "ไม่มีข้อมูล");
-
-                        $("#bookingModal").modal("show");
-                    }
-                });
-                calendar.render();
-            } else {
-                console.error("❌ ไม่พบ element #calendar ในหน้าเว็บ!");
-            }
-        });
-
-    </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
+    <br>
     <footer class="footer fade-in">
         <div class="contact-info">
             <h3>ติดต่อสอบถามเพิ่มเติม</h3>
@@ -169,5 +153,6 @@
         </div>
     </footer>
 </body>
+
 
 </html>

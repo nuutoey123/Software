@@ -23,7 +23,10 @@ while ($row = $result->fetch_assoc()) {
             "bookingTime" => $row["time_slot"] ?? "ไม่มีข้อมูล",
             "customerName" => $row["customer_name"] ?? "ไม่มีข้อมูล",
             "customerPhone" => $row["customer_phone"] ?? "ไม่มีข้อมูล",
+            "meetingTopic" => $row["meeting_topic"],  // ดึงหัวข้อการประชุม
+            "meetingDetail" => $row["meeting_detail"], // ดึงรายละเอียดการประชุม
             "department" => ($row["department_name"] ?? "") . " - " . ($row["sub_department_name"] ?? "ไม่มีข้อมูล")
+            
         ]
     ];
 }
