@@ -69,8 +69,6 @@ $result = $conn->query($sql);
                             <p><strong>ช่วงเวลา:</strong> <?php echo $row['time_slot']; ?></p>
                             <p><strong>ผู้จอง:</strong> <?php echo $row['customer_name']; ?></p>
                             <p><strong>เบอร์โทร:</strong> <?php echo $row['customer_phone']; ?></p>
-                            <p><strong>หัวข้อการประชุม:</strong> <?php echo $row['meeting_topic']; ?></p>
-                            <p><strong>รายละเอียด:</strong> <?php echo nl2br($row['meeting_detail']); ?></p>
                             <p><strong>หน่วยงาน:</strong>
                                 <?php echo $row['department_name'] . ' - ' . $row['sub_department_name']; ?></p>
                             <p><strong>หัวข้อการประชุม:</strong> <?php echo $row['meeting_topic']; ?></p>
